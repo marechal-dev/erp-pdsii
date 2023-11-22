@@ -1,0 +1,19 @@
+version: '3.8'
+
+volumes:
+  db-data:
+    driver: local
+
+services:
+  database:
+    image: bitnami/postgresql:15
+    container_name: 'erp-postgresql-db'
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DATABASE=erp
+    volumes:
+      - 'db-data:/bitnami/postgresql'
