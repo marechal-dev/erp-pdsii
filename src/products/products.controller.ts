@@ -21,7 +21,7 @@ export class ProductsController {
 
     return {
       id: created.id,
-      supplierId: created.sellingPrice,
+      supplierId: created.supplierId,
       title: created.title,
       buyingPrice: created.buyingPrice.toNumber(),
       sellingPrice: created.sellingPrice.toNumber(),
@@ -35,7 +35,7 @@ export class ProductsController {
 
     return data.map((item) => ({
       id: item.id,
-      supplierId: item.sellingPrice,
+      supplierId: item.supplierId,
       title: item.title,
       buyingPrice: item.buyingPrice.toNumber(),
       sellingPrice: item.sellingPrice.toNumber(),

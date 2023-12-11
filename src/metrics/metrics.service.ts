@@ -14,15 +14,16 @@ export class MetricsService {
     return {
       totalSells: sells.length,
       totalInStock: products.reduce((acc, current) => acc + current.stock, 0),
-      earnings: sells.reduce(
-        (acc, current) => acc + current.total.toNumber(),
-        0,
+      earnings: Number(
+        sells
+          .reduce((acc, current) => acc + current.total.toNumber(), 0)
+          .toFixed(2),
       ),
-      losses:
-        products.reduce(
-          (acc, current) => acc + current.buyingPrice.toNumber(),
-          0,
-        ) * -1,
+      expenses: Number(
+        products
+          .reduce((acc, current) => acc + current.buyingPrice.toNumber(), 0)
+          .toFixed(2),
+      ),
     };
   }
 }
