@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
 import { UpdateSupplierDto } from './dto/update-supplier.dto';
@@ -32,6 +36,14 @@ export class SuppliersService {
   }
 
   public async update(id: string, updateSupplierDto: UpdateSupplierDto) {
+    const supplier = await this.prisma.supplier.findUnique({
+      where: { id },
+    });
+
+    if (!supplier) {
+      throw new NotFoundException(`Fornecedor ${id} não existe`);
+    }
+
     const updated = await this.prisma.supplier.update({
       where: {
         id,
@@ -40,5 +52,19 @@ export class SuppliersService {
     });
 
     return updated;
+  }
+
+  public async delete(id: string) {
+    const supplier = await this.prisma.supplier.findUnique({
+      where: { id },
+    });
+
+    if (!supplier) {
+      throw new NotFoundException(`Fornecedor ${id} não existe`);
+    }
+
+    await this.prisma.supplier.delete({
+      where: { id },
+    });
   }
 }

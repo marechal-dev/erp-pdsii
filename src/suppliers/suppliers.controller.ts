@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseUUIDPipe,
   Post,
@@ -31,5 +34,11 @@ export class SuppliersController {
     @Body() updateSupplierDto: UpdateSupplierDto,
   ) {
     return this.suppliersService.update(id, updateSupplierDto);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  delete(@Param('id', ParseUUIDPipe) id: string) {
+    return this.suppliersService.delete(id);
   }
 }

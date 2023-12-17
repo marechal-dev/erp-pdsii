@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseUUIDPipe,
   Post,
@@ -52,11 +55,17 @@ export class ProductsController {
 
     return {
       id: updated.id,
-      supplierId: updated.sellingPrice,
+      supplierId: updated.supplierId,
       title: updated.title,
       buyingPrice: updated.buyingPrice.toNumber(),
       sellingPrice: updated.sellingPrice.toNumber(),
       stock: updated.stock,
     };
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async delete(@Param('id', ParseUUIDPipe) id: string) {
+    return this.productsService.delete(id);
   }
 }

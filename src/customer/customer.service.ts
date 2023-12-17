@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
@@ -32,6 +36,14 @@ export class CustomerService {
   }
 
   public async update(id: string, updateCustomerDto: UpdateCustomerDto) {
+    const customer = await this.prisma.customer.findUnique({
+      where: { id },
+    });
+
+    if (!customer) {
+      throw new NotFoundException(`Cliente ${id} não existe`);
+    }
+
     const updated = await this.prisma.customer.update({
       where: {
         id,
@@ -40,5 +52,19 @@ export class CustomerService {
     });
 
     return updated;
+  }
+
+  public async delete(id: string) {
+    const customer = await this.prisma.customer.findUnique({
+      where: { id },
+    });
+
+    if (!customer) {
+      throw new NotFoundException(`Cliente ${id} não existe`);
+    }
+
+    await this.prisma.customer.delete({
+      where: { id },
+    });
   }
 }

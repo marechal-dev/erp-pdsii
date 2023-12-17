@@ -15,7 +15,7 @@ export class SellsController {
       customerId: created.customerId,
       productId: created.productId,
       quantity: created.quantity,
-      total: created.total.toNumber(),
+      total: Number(created.total.toNumber().toFixed(2)),
     };
   }
 }

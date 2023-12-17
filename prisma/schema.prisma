@@ -18,7 +18,7 @@ model Product {
   stock        Int     @default(0)
   supplierId   String
 
-  seller Supplier @relation(fields: [supplierId], references: [id])
+  seller Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
   sells  Sell[]
 
   @@map("products")
@@ -55,8 +55,8 @@ model Sell {
   quantity   Int
   total      Decimal
 
-  customer Customer @relation(fields: [customerId], references: [id])
-  product  Product  @relation(fields: [productId], references: [id])
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  product  Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@map("sells")
 }
